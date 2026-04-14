@@ -1,0 +1,152 @@
+
+/******************************************************************************
+** DAT038, TDA417  Datastrukturer och algoritmer, LP2 2020
+** Lab 3: Plagiarism detection
+*******************************************************************************/
+
+
+/******************************************************************************
+** Task: Running the slow program
+**
+** 1. What is the complexity of findSimilarity?
+**    Answer in terms of N, the total number of 5-grams in the input files.
+**    Assume that the number of 5-grams that occur in more than one file
+**    is a small constant - that is, there is not much plagiarised text.
+******************************************************************************/
+
+ Quadratic O(N²)
+
+Let D be the number of documents and K be the number of 5-grams per document.
+The algorithm has four nested loops: for each document d1, for each document d2 ≠ d1,
+for each 5-gram n1 in d1, for each 5-gram n2 in d2. This gives O(D * D * K * K) = O(D²K²).
+
+Since N = D * K, we have D = N/K, so the complexity is O((N/K)² * K²) = O(N²).
+
+
+/******************************************************************************
+** 2. How long did the program take on the 'small' and 'medium' directories?
+**    Is the ratio between the times what you would expect, given the complexity?
+**    Explain very briefly why.
+*******************************************************************************/
+
+Small: 8.32 seconds total (8.09 seconds for computing similarity scores)
+Medium: 964.68 seconds total (963.95 seconds for computing similarity scores)
+
+The ratio is 964.68 / 8.32 approximately 115.9.
+
+The ratio of N values is 200,000 / 20,000 = 10.
+For O(N²) complexity, we would expect a time ratio of 10² = 100.
+
+The actual ratio (115.9) is close to 100 but slightly higher. This is expected because
+the medium directory contains more plagiarised text than the small directory, which
+means more 5-grams occur in multiple files, violating our assumption that the number
+of 5-grams occurring in more than one file is a small constant.
+
+
+/******************************************************************************
+** 3. How long do you predict the program would take to run on
+**    the 'huge' directory? Show your calculations.
+*******************************************************************************/
+
+Using the small directory as baseline:
+- N ratio: 4,000,000 / 20,000 = 200
+- Expected time ratio for O(N²): 200² = 40,000
+- Predicted time: 8.32 * 40,000 = 332,800 seconds approximately 92.4 hours
+
+Alternatively, using the medium directory:
+- N ratio: 4,000,000 / 200,000 = 20
+- Expected time ratio: 20² = 400
+- Predicted time: 964.68 * 400 = 385,872 seconds approximately 107 hours
+
+Given the slight discrepancy observed between small and medium, a reasonable
+prediction would be around 100 hours.
+
+
+/******************************************************************************
+** Task: Using binary search trees
+**
+** 4. Which of the trees usually become unbalanced?
+******************************************************************************/
+
+The index tree becomes unbalanced. For example:
+- Small: size 19748, height 34 (height should be around log₂(19748) approximately 14 for balanced)
+- Medium: size 208024, height 32 (height should be around log₂(208024) approximately 18 for balanced)
+
+The similarity tree also becomes unbalanced:
+- Small: size 16, height 15 (should be around log₂(16) = 4 for balanced)
+- Medium: size 874, height 873 (should be around log₂(874) approximately 10 for balanced)
+
+
+/******************************************************************************
+** 5 (optional). Is there a simple way to stop these trees becoming unbalanced?
+******************************************************************************/
+
+[...]
+
+
+/******************************************************************************
+** Task: Using scapegoat trees
+**
+** 6. Now what is the total complexity of buildIndex and findSimilarity?
+**    Again, assume a total of N 5-grams, and a constant number of 5-grams
+**    that occur in more than one file.
+******************************************************************************/
+
+O(N log N)
+
+buildIndex: We iterate through all N 5-grams and insert each into a scapegoat tree.
+Each insertion takes O(log N) time (amortized), so buildIndex takes O(N log N).
+
+findSimilarity: We iterate through all n-grams in the index (at most N distinct n-grams).
+For each n-gram that appears in multiple files, we iterate through pairs of files.
+Since we assume a constant number of 5-grams occur in more than one file, and each
+such n-gram appears in at most a constant number of files, the total work is O(N).
+
+Total: O(N log N) + O(N) = O(N log N)
+
+
+/******************************************************************************
+** 7 (optional). What if the total similarity score is an arbitrary number S,
+**               rather than a small constant?
+******************************************************************************/
+
+O(N log N + S)
+
+If the total similarity score S is arbitrary, then in findSimilarity, we need to
+process all pairs of files that share n-grams. The total number of such pairs
+is proportional to S (the total similarity score across all pairs).
+
+buildIndex still takes O(N log N).
+findSimilarity now takes O(N + S) because we iterate through all n-grams in the
+index (O(N)) and process all pairs of files that share n-grams (O(S)).
+
+Total: O(N log N + S)
+
+
+
+/******************************************************************************
+** Appendix: General information
+**
+** B. Are there any known bugs / limitations?
+******************************************************************************/
+
+[No]
+
+
+/******************************************************************************
+** C. Did you collaborate with any other students on this lab?
+**    If so, please write in what way you collaborated and with whom.
+**    Also include any resources (including the web) that you may
+**    may have used in creating your design.
+******************************************************************************/
+
+[No]
+
+/******************************************************************************
+** D. List any other comments here.
+**    Feel free to provide any feedback on how much you learned 
+**    from doing the assignment, and whether you enjoyed it.                                             
+******************************************************************************/
+
+[...]
+
