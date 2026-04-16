@@ -3,14 +3,6 @@
 In this lab your task is to modify a plagiarism detection program so
 that it makes better use of data structures. You will also implement
 important parts of a balanced BST data structure called a _scapegoat tree_.
-
-## About the labs
-
-- Labs must be done in groups. <!--If you absolutely cannot work together with your previous lab partners, contact Christian, Peter or Nick. -->
-- Each lab has two deadlines. By the first deadline you must submit at least a partial attempt at solving the lab. The lab will be marked and you will get feedback. By the second deadline, you must submit a complete and correct solution. If you are unsure if you have solved the lab correctly, please ask at a lab session!
-- The lab is part of the examination of the course. Therefore, you must not copy code from or show code to other groups. You are welcome to discuss ideas with one another, but anything you submit must be **the work of you and your lab partners**.
-<!--  - Please read [the general instructions on how to run the labs](https://chalmers.instructure.com/courses/10681/pages/running-the-labs-command-line-eclipse-or-intellij). -->
-
 ## Background
 
 You are head of the Anti-Cheating Department at Palmers University of Mythology, where you are in charge of catching students who copy each others' work.
